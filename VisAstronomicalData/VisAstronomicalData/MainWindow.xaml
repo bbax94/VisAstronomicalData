@@ -1,0 +1,33 @@
+﻿<Window x:Class="VisAstronomicalData.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VisAstronomicalData"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <DockPanel LastChildFill="False" Margin="0,30,0,25" HorizontalAlignment="Left" Width="75" Background="LightGray">
+            <Button x:Name="ImportFolderButton" Width="65" Margin="0,20,0,0" Height="40" VerticalAlignment="Top" DockPanel.Dock="Top" Background="DarkSlateGray" Click="ImportFolderButton_Click">
+                <TextBlock x:Name="importTextBlock" TextWrapping="Wrap" Text="Import Folder" Width="55" TextAlignment="Center"/>
+            </Button>
+            <Button x:Name="GenerateGraphButton" Width="65" Margin="0,10,0,0" Height="40" VerticalAlignment="Top" DockPanel.Dock="Top" Background="DarkSlateGray" Click="GenerateGraphButton_Click">
+                <TextBlock x:Name="generateTextBlock" TextWrapping="Wrap" Text="Generate Graph" Width="55" TextAlignment="Center"/>
+            </Button>
+        </DockPanel>
+        <DockPanel LastChildFill="False" VerticalAlignment="Top" Height="30" Background="DarkGray"/>
+        <ProgressBar HorizontalAlignment="Left" Height="10" Margin="80,35,0,0" VerticalAlignment="Top" Width="430"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="248" Margin="80,50,0,0" VerticalAlignment="Top" Width="95">
+            <Canvas HorizontalAlignment="Left" Height="228" Margin="9.2,9.2,0,0" VerticalAlignment="Top" Width="75">
+                <ScrollViewer Height="200" Width="75" Canvas.Top="26"/>
+                <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="File List" Height="26" Width="75" TextAlignment="Center"/>
+            </Canvas>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="248" Margin="180,50,0,0" VerticalAlignment="Top" Width="330">
+            <Canvas HorizontalAlignment="Left" Height="228" Margin="9.2,9.2,0,0" VerticalAlignment="Top" Width="310">
+                <ScrollViewer Height="200" Width="310" Canvas.Top="26"/>
+                <TextBlock x:Name="textBlock1_Copy" TextWrapping="Wrap" Text="Details of file" Height="26" Width="310" TextAlignment="Center"/>
+            </Canvas>
+        </Border>
+    </Grid>
+</Window>
