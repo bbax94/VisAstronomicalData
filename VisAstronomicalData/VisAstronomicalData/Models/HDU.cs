@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VisAstronomicalData.Models
 {
-    class HDU
+    public class HDU
     {
         public HDUHeader Header { get; set; }
         public HDUBinaryTable Table { get; set; }

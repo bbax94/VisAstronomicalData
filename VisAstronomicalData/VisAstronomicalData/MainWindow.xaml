@@ -5,29 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VisAstronomicalData"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow"
+        WindowState="Maximized">
+    
     <Grid>
-        <DockPanel LastChildFill="False" Margin="0,30,0,25" HorizontalAlignment="Left" Width="75" Background="LightGray">
-            <Button x:Name="ImportFolderButton" Width="65" Margin="0,20,0,0" Height="40" VerticalAlignment="Top" DockPanel.Dock="Top" Background="DarkSlateGray" Click="ImportFolderButton_Click">
-                <TextBlock x:Name="importTextBlock" TextWrapping="Wrap" Text="Import Folder" Width="55" TextAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+       
+        <!--Grid Column 0, Row 1: Menu-->
+        <DockPanel x:Name ="MenuDock" 
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                   LastChildFill="False" Grid.Row="1" Grid.Column="0"
+                   Background="LightGray">
+            <Button x:Name="ImportFolderButton" 
+                    VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                    Margin="5,20,5,0" Height="40"  DockPanel.Dock="Top" 
+                    Background="Moccasin"  Click="ImportFolderButton_Click">
+                <TextBlock x:Name="ImportTextBlock" 
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center">
+                    Import Folder
+                </TextBlock>
             </Button>
-            <Button x:Name="GenerateGraphButton" Width="65" Margin="0,10,0,0" Height="40" VerticalAlignment="Top" DockPanel.Dock="Top" Background="DarkSlateGray" Click="GenerateGraphButton_Click">
-                <TextBlock x:Name="generateTextBlock" TextWrapping="Wrap" Text="Generate Graph" Width="55" TextAlignment="Center"/>
+            <Button x:Name="GenerateGraphButton" 
+                    VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                    Margin="5,0,5,20" Height="40"  DockPanel.Dock="Bottom" 
+                    Background="Moccasin"  Click="GenerateGraphButton_Click">
+                <TextBlock x:Name="GenerateGraphTextBlock" 
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center">
+                    Generate Graph
+                </TextBlock>
             </Button>
+            <ComboBox x:Name="HDUSelectionBox" 
+                      VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                      Margin="5,0,5,20" Height="40" DockPanel.Dock="Bottom"
+                      Background="White" Focusable="False" IsHitTestVisible="False">
+            </ComboBox>
+            <ComboBox x:Name="MoleculeSelectionBox" 
+                      VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                      Margin="5,0,5,20" Height="40" DockPanel.Dock="Bottom"
+                      Background="White" Focusable="False" IsHitTestVisible="False">
+            </ComboBox>
         </DockPanel>
-        <DockPanel LastChildFill="False" VerticalAlignment="Top" Height="30" Background="DarkGray"/>
-        <ProgressBar HorizontalAlignment="Left" Height="10" Margin="80,35,0,0" VerticalAlignment="Top" Width="430"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="248" Margin="80,50,0,0" VerticalAlignment="Top" Width="95">
-            <Canvas HorizontalAlignment="Left" Height="228" Margin="9.2,9.2,0,0" VerticalAlignment="Top" Width="75">
-                <ScrollViewer Height="200" Width="75" Canvas.Top="26"/>
-                <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="File List" Height="26" Width="75" TextAlignment="Center"/>
-            </Canvas>
-        </Border>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="248" Margin="180,50,0,0" VerticalAlignment="Top" Width="330">
-            <Canvas HorizontalAlignment="Left" Height="228" Margin="9.2,9.2,0,0" VerticalAlignment="Top" Width="310">
-                <ScrollViewer Height="200" Width="310" Canvas.Top="26"/>
-                <TextBlock x:Name="textBlock1_Copy" TextWrapping="Wrap" Text="Details of file" Height="26" Width="310" TextAlignment="Center"/>
-            </Canvas>
-        </Border>
+
+        <!--Grid Column 1, Row 1: File List-->
+        <ScrollViewer  Grid.Column="1" Grid.Row="1" Margin="0,0,0,80">
+            <TreeView x:Name="FileList" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" />
+        </ScrollViewer>
+        
+        <Button x:Name="GenerateFileListButton" 
+                    Grid.Column="1" Grid.Row="1" DockPanel.Dock="Bottom" 
+                    VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                    Margin="10,0,10,20" Height="40"  Width="80"
+                    Background="Moccasin"  Click="GenerateFileListButton_Click">
+            <TextBlock x:Name="GenerateFileListTextBlock" 
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center">
+                    Generate File List
+            </TextBlock>
+        </Button>
+
+        <!--Grid Column 2, Row 1: Selected file info-->
+        <ScrollViewer Grid.Column="2" Grid.Row="1" >
+            <ListBox x:Name="FileInfoList" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </ScrollViewer>
+        
     </Grid>
 </Window>
+

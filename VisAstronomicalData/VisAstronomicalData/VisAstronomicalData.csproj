@@ -66,15 +66,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\FitsCollection.cs" />
+    <Compile Include="Models\HeaderKeysList.cs" />
     <Compile Include="Models\Pixel.cs" />
     <Compile Include="Models\HDUBinaryTable.cs" />
     <Compile Include="Models\FitsFile.cs" />
     <Compile Include="Models\HDU.cs" />
     <Compile Include="Models\HDUHeader.cs" />
+    <Compile Include="Models\Survey.cs" />
     <Compile Include="PlotWindow.xaml.cs">
       <DependentUpon>PlotWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\FitsInterpreter.cs" />
+    <Compile Include="Store\StoreFitsData.cs" />
+    <Compile Include="Store\StoreWindows.cs" />
     <Compile Include="ViewModels\PlotWindowModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

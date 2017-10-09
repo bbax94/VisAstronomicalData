@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VisAstronomicalData.Models;
+using VisAstronomicalData.Store;
 using VisAstronomicalData.ViewModels;
 
 namespace VisAstronomicalData
@@ -32,6 +33,32 @@ namespace VisAstronomicalData
             DataContext = viewModel;
 
             InitializeComponent();
+        }
+
+        public PlotWindow()
+        {
+            InitializeComponent();
+        }
+
+        public void UpdatePlot(int hdu, string molecule)
+        {
+            Survey survey = StoreFitsData.Survey;
+            List<HDUBinaryTable> binaryTables = new List<HDUBinaryTable>();
+
+            foreach (FitsCollection fitsCollection in survey.FitsCollections)
+            {
+                foreach (FitsFile fitsFile in fitsCollection.FitsFiles)
+                {
+                    if (fitsFile.Molecule.Equals(molecule, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        binaryTables.Add(fitsFile.HDUS[hdu].Table);
+                        break;
+                    }
+                }
+            }
+
+            viewModel = new PlotWindowModel(binaryTables);
+            DataContext = viewModel;
         }
     }
 }

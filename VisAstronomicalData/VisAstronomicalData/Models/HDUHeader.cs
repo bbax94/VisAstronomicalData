@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace VisAstronomicalData.Models
 {
-    class HDUHeader
+    public class HDUHeader
     {
-        Dictionary<string, double> Headers { get; set; }
+        public Dictionary<string, double> Headers { get; set; }
 
         public HDUHeader()
         {
