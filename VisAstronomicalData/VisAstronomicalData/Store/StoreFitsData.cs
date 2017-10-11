@@ -10,5 +10,7 @@ namespace VisAstronomicalData.Store
     static class StoreFitsData
     {
         public static Survey Survey { get; set; }
+
+        public static List<List<HDUBinaryTable>> Tables { get; set; }
     }
 }

@@ -65,13 +65,10 @@ namespace VisAstronomicalData.ViewModels
             PlotModel.Axes.Add(yAxis);
         }
 
-        private void PlotData(List<HDUBinaryTable> tables)
+        public void PlotData(List<HDUBinaryTable> tables)
         {
-            Random random = new Random();
+            ResetDataAndColourBar();
             ScatterSeries scatterSeries;
-
-            double max = Double.MinValue;
-            double min = Double.MaxValue;
 
             foreach (HDUBinaryTable table in tables)
             {
@@ -85,28 +82,31 @@ namespace VisAstronomicalData.ViewModels
                     scatterSeries.Points.Add(new ScatterPoint(pixel.X, pixel.Y, 3, pixel.Weight));
                 }
 
-                if (table.Max > max)
-                {
-                    max = table.Max;
-                }
-
-                if (table.Min < min)
-                {
-                    min = table.Min;
-                }
                 PlotModel.Series.Add(scatterSeries);
             }
 
             LinearColorAxis heatAxis = new LinearColorAxis
             {
                 Position = AxisPosition.Right,
-                Minimum = min,
-                Maximum = max,
                 HighColor = OxyColors.OrangeRed,
                 LowColor = OxyColors.BlueViolet
             };
 
             PlotModel.Axes.Add(heatAxis);
+            PlotModel.InvalidatePlot(true);
+        }
+
+        private void ResetDataAndColourBar()
+        {
+            while (PlotModel.Series.Count > 0)
+            {
+                PlotModel.Series.RemoveAt(0);
+            }
+
+            if (PlotModel.Axes.Count == 3)
+            {
+                PlotModel.Axes.RemoveAt(2);
+            }
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

@@ -57,7 +57,24 @@ namespace VisAstronomicalData
                 }
             }
 
-            viewModel = new PlotWindowModel(binaryTables);
+            List<List<HDUBinaryTable>> tables = StoreFitsData.Tables;
+
+            if (tables == null)
+            {
+                tables = new List<List<HDUBinaryTable>>();
+            }
+
+            tables.Add(binaryTables);
+
+            if (viewModel == null)
+            {
+                viewModel = new PlotWindowModel(binaryTables);
+            }
+            else
+            {
+                viewModel.PlotData(binaryTables);
+            }
+
             DataContext = viewModel;
         }
     }

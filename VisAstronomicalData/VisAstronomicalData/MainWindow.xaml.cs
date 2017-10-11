@@ -58,7 +58,7 @@ namespace VisAstronomicalData
         private void GenerateGraphButton_Click(object sender, RoutedEventArgs e)
         {
             if (!HDUSelectionBox.SelectedItem.ToString().Equals("Select A HDU") &&
-                    !MoleculeSelectionBox.SelectedItem.ToString().Equals("Select a Molecule")
+                    !MoleculeSelectionBox.SelectedItem.ToString().Equals("Select a Molecule"))
             {
                 StoreWindows.WindowPlot.UpdatePlot(
                     Convert.ToInt32(HDUSelectionBox.SelectedValue.ToString()) - 1,
