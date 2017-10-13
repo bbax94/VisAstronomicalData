@@ -22,7 +22,8 @@ namespace VisAstronomicalData.Models
             "CRVAL1",
             "CRVAL2",
             "CDELT1",
-            "CDELT2"
+            "CDELT2",
+            "COMMENT"
         });
     }
 }

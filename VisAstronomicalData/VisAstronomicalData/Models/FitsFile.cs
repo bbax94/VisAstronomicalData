@@ -18,6 +18,8 @@ namespace VisAstronomicalData.Models
         public string Name { get; set; }
         public string Molecule { get; set; }
 
+        private const char splitChar = ' ';
+
         public FitsFile(Fits nomTamFits, string filepath, string name, string molecule)
         {
             NomTamFits = nomTamFits;
@@ -34,11 +36,19 @@ namespace VisAstronomicalData.Models
             BasicHDU[] hdus = NomTamFits.Read();
 
             foreach (BasicHDU hdu in hdus.Skip(1))
-            {
+            {           
                 HDU cSharpHDU = new HDU();
                 foreach (string headerKey in HeaderKeysList.HeaderKeys)
                 {
-                    cSharpHDU.AddHeader(headerKey, hdu.Header.GetDoubleValue(headerKey));
+                    if (headerKey.Equals("COMMENT", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        cSharpHDU.Header.DataType = hdu.Header.GetCard(14).Split(splitChar)[2];
+                    }
+                    else
+                    {
+                        cSharpHDU.AddHeader(headerKey, hdu.Header.GetDoubleValue(headerKey));
+                    }
+                    
                 }
 
                 System.Array hduDataArray = (System.Array)hdu.Data.DataArray;
@@ -72,7 +82,7 @@ namespace VisAstronomicalData.Models
                         _y = yCoord + ((refPixelY + i - 1) * offsetY);
                         weight = data[i];
 
-                        if (_x is double && _y is double && !Double.IsNaN(weight))
+                        if (_x is double && _y is double && !Double.IsNaN(weight) && weight != 999)
                         {
                             double x = _x ?? 0;
                             double y = _y ?? 0;
@@ -99,7 +109,7 @@ namespace VisAstronomicalData.Models
                         _y = yCoord + ((refPixelY + i - 1) * offsetY);
                         weight = data[i];
 
-                        if (_x is double && _y is double)
+                        if (_x is double && _y is double && !Double.IsNaN(weight) && weight != 999)
                         {
                             double x = _x ?? 0;
                             double y = _y ?? 0;

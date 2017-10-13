@@ -9,6 +9,7 @@ namespace VisAstronomicalData.Models
     public class HDUHeader
     {
         public Dictionary<string, double> Headers { get; set; }
+        public String DataType { get; set; }
 
         public HDUHeader()
         {
