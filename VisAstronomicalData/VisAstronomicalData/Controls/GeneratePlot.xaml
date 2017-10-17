@@ -1,0 +1,83 @@
+﻿<UserControl    x:Class="VisAstronomicalData.GeneratePlot"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:local="clr-namespace:VisAstronomicalData"
+                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+                mc:Ignorable="d" 
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Background="#FAFAFA">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <materialDesign:Card Margin="8" Grid.Row="0">
+            <TextBlock TextAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}" Background="#9E9E9E" Padding="8">Generate Plot</TextBlock>
+        </materialDesign:Card>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Column="0" Margin="8">
+                <materialDesign:Card Margin="8" Grid.Column="0">
+                    <TextBlock TextAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}" Background="#9E9E9E" Padding="8">New Plot</TextBlock>
+                </materialDesign:Card>
+
+                <ComboBox x:Name="MoleculeComboBox" Grid.Column="0" Padding="8" Margin="16" HorizontalAlignment="Stretch" ItemsSource="{Binding MoleculeNames}"/>
+                <ComboBox x:Name="HDUComboBox" Grid.Column="0" Padding="8" Margin="16" HorizontalAlignment="Stretch" ItemsSource="{Binding HDUNames}"/>
+
+                <StackPanel Orientation="Horizontal" Margin="8">
+                    <TextBlock Padding="8" Margin="8" Text="    Value is " FontWeight="Bold" TextAlignment="Left"/>
+                    <ComboBox x:Name="OperatorComboBox_1" Width="100" Padding="8" Margin="8" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Content="="/>
+                        <ComboBoxItem Content="!="/>
+                        <ComboBoxItem Content="&lt;"/>
+                        <ComboBoxItem Content="&lt;="/>
+                        <ComboBoxItem Content="&gt;"/>
+                        <ComboBoxItem Content="&gt;="/>
+                    </ComboBox>
+                    <TextBox x:Name="TextField_1" Width="100" Padding="0" Margin="8" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="8">
+                    <TextBlock Padding="8" Margin="8" Text="    Value is " FontWeight="Bold" TextAlignment="Left"/>
+                    <ComboBox x:Name="OperatorComboBox_2" Width="100" Padding="8" Margin="8" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Content="="/>
+                        <ComboBoxItem Content="!="/>
+                        <ComboBoxItem Content="&lt;"/>
+                        <ComboBoxItem Content="&lt;="/>
+                        <ComboBoxItem Content="&gt;"/>
+                        <ComboBoxItem Content="&gt;="/>
+                    </ComboBox>
+                    <TextBox x:Name="TextField_2" Width="100" Padding="0" Margin="8" />
+                </StackPanel>
+                <Menu HorizontalContentAlignment="Center" Padding="8" Margin="16" HorizontalAlignment="Right">
+                    <Menu.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </Menu.ItemsPanel>
+                    <MenuItem Header="Generate Plot" Click="GeneratePlot_Click">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="ChartScatterplotHexbin"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </Menu>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Column="1" Margin="8">
+                <materialDesign:Card Margin="8" Grid.Column="1">
+                    <TextBlock TextAlignment="Center" Style="{DynamicResource MaterialDesignTitleTextBlock}" Background="#9E9E9E" Padding="8">Existing Plot</TextBlock>
+                </materialDesign:Card>
+                <ComboBox x:Name="QueryComboBox" Grid.Column="0" Padding="8" Margin="16" HorizontalAlignment="Stretch" SelectionChanged="QueryComboBox_SelectionChanged"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

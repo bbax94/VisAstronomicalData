@@ -11,6 +11,6 @@ namespace VisAstronomicalData.Store
     {
         public static Survey Survey { get; set; }
 
-        public static List<List<HDUBinaryTable>> Tables { get; set; }
+        public static List<Query> Queries { get; set; }
     }
 }

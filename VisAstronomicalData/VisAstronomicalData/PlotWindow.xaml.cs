@@ -27,52 +27,47 @@ namespace VisAstronomicalData
     {
         private PlotWindowModel viewModel;
 
-        public PlotWindow(List<HDUBinaryTable> tables)
-        {
-            viewModel = new PlotWindowModel(tables);
-            DataContext = viewModel;
-
-            InitializeComponent();
-        }
-
         public PlotWindow()
         {
             InitializeComponent();
         }
 
-        public void UpdatePlot(int hdu, string molecule)
+        public void UpdatePlot(int hdu, string molecule, Query query)
         {
             Survey survey = StoreFitsData.Survey;
-            List<HDUBinaryTable> binaryTables = new List<HDUBinaryTable>();
+            List<HDUBinaryTable> binaryTables;
 
-            foreach (FitsCollection fitsCollection in survey.FitsCollections)
+            if (query.Tables == null)
             {
-                foreach (FitsFile fitsFile in fitsCollection.FitsFiles)
+                binaryTables = new List<HDUBinaryTable>();
+
+                foreach (FitsCollection fitsCollection in survey.FitsCollections)
                 {
-                    if (fitsFile.Molecule.Equals(molecule, StringComparison.InvariantCultureIgnoreCase))
+                    foreach (FitsFile fitsFile in fitsCollection.FitsFiles)
                     {
-                        binaryTables.Add(fitsFile.HDUS[hdu].Table);
-                        break;
+                        if (fitsFile.Molecule.Equals(molecule, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            binaryTables.Add(fitsFile.HDUS[hdu].Table);
+                            break;
+                        }
                     }
                 }
+
+                query.Tables = binaryTables;
             }
-
-            List<List<HDUBinaryTable>> tables = StoreFitsData.Tables;
-
-            if (tables == null)
+           
+            else
             {
-                tables = new List<List<HDUBinaryTable>>();
+                binaryTables = query.Tables;
             }
-
-            tables.Add(binaryTables);
 
             if (viewModel == null)
             {
-                viewModel = new PlotWindowModel(binaryTables);
+                viewModel = new PlotWindowModel(binaryTables, query);
             }
             else
             {
-                viewModel.PlotData(binaryTables);
+                viewModel.PlotData(binaryTables, query);
             }
 
             DataContext = viewModel;

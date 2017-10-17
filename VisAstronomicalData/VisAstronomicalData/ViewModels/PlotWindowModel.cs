@@ -23,11 +23,11 @@ namespace VisAstronomicalData.ViewModels
             set { plotModel = value; OnPropertyChanged("PlotModel"); }
         }
 
-        public PlotWindowModel(List<HDUBinaryTable> tables)
+        public PlotWindowModel(List<HDUBinaryTable> tables, Query query)
         {
             PlotModel = new PlotModel();
             this.SetUpModel();
-            this.PlotData(tables);
+            this.PlotData(tables, query);
         }
 
         private void SetUpModel()
@@ -65,7 +65,7 @@ namespace VisAstronomicalData.ViewModels
             PlotModel.Axes.Add(yAxis);
         }
 
-        public void PlotData(List<HDUBinaryTable> tables)
+        public void PlotData(List<HDUBinaryTable> tables, Query query)
         {
             ResetDataAndColourBar();
             ScatterSeries scatterSeries;
@@ -79,7 +79,10 @@ namespace VisAstronomicalData.ViewModels
 
                 foreach (Pixel pixel in table.Pixels)
                 {
-                    scatterSeries.Points.Add(new ScatterPoint(pixel.X, pixel.Y, 3, pixel.Weight));
+                    if (EvaluateQueries(pixel.Weight, query))
+                    {
+                        scatterSeries.Points.Add(new ScatterPoint(pixel.X, pixel.Y, 3, pixel.Weight));
+                    }
                 }
 
                 PlotModel.Series.Add(scatterSeries);
@@ -94,6 +97,75 @@ namespace VisAstronomicalData.ViewModels
 
             PlotModel.Axes.Add(heatAxis);
             PlotModel.InvalidatePlot(true);
+        }
+
+        private bool EvaluateQueries(double weight, Query query)
+        {
+            if (query.Op != null)
+            {
+                if (!EvaluateQuery(weight, query.Op, query.Value))
+                {
+                    return false;
+                }
+            }
+
+            if (query.Op2 != null)
+            {
+                if (!EvaluateQuery(weight, query.Op2, query.Value2))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool EvaluateQuery(double weight, string op, double value)
+        {
+            if (op.Equals("="))
+            {
+                if (weight != value)
+                {
+                    return false;
+                }
+            }
+            else if (op.Equals("!="))
+            {
+                if (weight == value)
+                {
+                    return false;
+                }
+            }
+            else if (op.Equals("<"))
+            {
+                if (weight >= value)
+                {
+                    return false;
+                }
+            }
+            else if (op.Equals("<="))
+            {
+                if (weight > value)
+                {
+                    return false;
+                }
+            }
+            else if (op.Equals(">"))
+            {
+                if (weight <= value)
+                {
+                    return false;
+                }
+            }
+            else if (op.Equals(">="))
+            {
+                if (weight < value)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private void ResetDataAndColourBar()

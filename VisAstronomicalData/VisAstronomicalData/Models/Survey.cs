@@ -9,25 +9,41 @@ namespace VisAstronomicalData.Models
 {
     public class Survey
     {
-        public string SurveyName { get; set; }
+        public string SurveyName { get; private set; }
+        public string FolderLocation { get; private set; }
         public List<FitsCollection> FitsCollections { get; set; }
-        public List<string> MoleculeNames { get; set; }
+        public List<string> MoleculeNames { get; private set; }
+        public List<string> HDUNames { get; private set; }
+        public int FitsCount { get; private set; }
+        public int MoleculeCount { get; private set; }
+        public int HDUCount { get; private set; }
+        public List<Query> Queries { get; private set; }
+        public List<string> QueriesList { get; private set; }
 
         private const char splitChar = '_';
 
-        public Survey(string surveyName)
+        public Survey(string folder)
         {
-            SurveyName = surveyName;
+            SurveyName = Path.GetFileName(folder);
+            FolderLocation = folder;
             FitsCollections = new List<FitsCollection>();
             MoleculeNames = new List<string>();
+            FitsCount = 0;
+            MoleculeCount = 0;
+            HDUCount = 0;
+            HDUNames = new List<string>();
         }
 
         public void ImportFolder(string[] files)
         {
+            FitsCount = files.Length;
+
             foreach (string filePath in files)
             {
                 ImportFile(filePath);
             }
+
+            GetHDUCount();
         }
 
         private void ImportFile(string filePath)
@@ -86,6 +102,7 @@ namespace VisAstronomicalData.Models
             if (!foundMolecule)
             {
                 AddMoleculeName(moleculeName);
+                MoleculeCount++;
             }
 
             nomTamfits.Close();
@@ -102,6 +119,16 @@ namespace VisAstronomicalData.Models
             }
 
             MoleculeNames.Add(moleculeName);
+        }
+
+        private void GetHDUCount()
+        {
+            HDUNames = new List<string>();
+            HDUCount = FitsCollections[0].FitsFiles[0].HDUS.Count;
+            foreach (HDU hdu in FitsCollections[0].FitsFiles[0].HDUS)
+            {
+                HDUNames.Add(hdu.Header.DataType);
+            }
         }
     }
 }
